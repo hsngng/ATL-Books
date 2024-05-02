@@ -1,10 +1,19 @@
 package com.company.lesson1;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        BookC bookC = new BookC("Qara Gun", "Shamil Azakhov",Status.BORROWED);
-        System.out.println(bookC);
-        bookC.borrowBook();
-        System.out.println(bookC);
+        Scanner sc = new Scanner(System.in);
+        String a = sc.next();
+
+        Integer integer = Integer.parseInt(a);
+        
+        try {
+            int num = Integer.parseInt(a);
+        } catch (NumberFormatException e){
+            System.out.println("111");
+        }
+
     }
 }
