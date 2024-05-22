@@ -1,0 +1,126 @@
+create table Employees
+(
+    EmployeeID serial primary key,
+    FirstName  varchar(50),
+    LastName   varchar(50),
+    Position   varchar(50),
+    Salary     decimal(10, 2)
+);
+
+create table Customers
+(
+    CustomerID serial primary key,
+    Name       varchar(50),
+    Email      varchar(50),
+    Phone      varchar(20)
+);
+
+create table Orders
+(
+    OrderID     serial primary key,
+    OrderNumber varchar(20),
+    OrderDate   date,
+    OrderPrice  decimal(10, 2),
+    Status      varchar(20),
+    CustomerID  int,
+    FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID)
+);
+
+create table Products
+(
+    ProductID serial primary key,
+    Name      varchar(50),
+    Price     decimal(10, 2),
+    Category  varchar(50)
+);
+
+create table Sales
+(
+    SaleID    serial primary key,
+    ProductID int,
+    Quantity  int,
+    Price     decimal(10, 2),
+    Revenue   decimal(10, 2),
+    FOREIGN KEY (ProductID) REFERENCES Products (ProductID)
+);
+
+create table Inventory
+(
+    ProductID serial primary key,
+    Quantity  int,
+    FOREIGN KEY (ProductID) REFERENCES Products (ProductID)
+);
+
+INSERT INTO Employees (FirstName, LastName, Position, Salary)
+VALUES ('John', 'Doe', 'Manager', 5000.00),
+       ('Jane', 'Smith', 'Salesperson', 3000.00),
+       ('Mike', 'Johnson', 'Technician', 2500.00);
+
+INSERT INTO Customers (Name, Email, Phone)
+VALUES ('Acme Corp', 'info@acme.com', '123-456-7890'),
+       ('XYZ Company', 'info@xyz.com', '987-654-3210'),
+       ('ABC Enterprises', 'info@abc.com', '555-555-5555');
+
+INSERT INTO Orders (OrderNumber, OrderDate, OrderPrice, Status, CustomerID)
+VALUES ('ORD001', '2023-06-01', 1000.00, 'Completed', 1),
+       ('ORD002', '2023-06-05', 500.00, 'Completed', 2),
+       ('ORD003', '2023-06-10', 750.00, 'Pending', 3);
+
+INSERT INTO Products(Name, Price, Category)
+VALUES ('Product A', 10.99, 'Electronics'),
+       ('Product B', 25.99, 'Home & Garden'),
+       ('Product C', 5.99, 'Books');
+
+INSERT INTO Sales (ProductID, Quantity, Price, Revenue)
+VALUES (1, 10, 10.99, 109.90),
+       (2, 5, 25.99, 129.95),
+       (3, 20, 5.99, 119.80);
+
+INSERT INTO Inventory (ProductID, Quantity)
+VALUES (1, 100),
+       (2, 50),
+       (3, 200);
+--1
+SELECT * FROM Employees;
+--2
+SELECT name, email
+FROM Customers;
+--3
+SELECT * FROM Orders
+WHERE status = 'Completed';
+--4
+SELECT name,price
+FROM Products
+WHERE category = 'Electronics';
+--5
+SELECT SaleID,Revenue
+FROM Sales;
+--6
+SELECT ProductID, SUM(Quantity) AS TotalQuantity
+FROM Inventory
+GROUP BY ProductID ;
+---7
+SELECT FirstName,LastName
+FROM Employees
+WHERE Position = 'Manager';
+---8
+SELECT * FROM Orders
+WHERE CustomerID = 2;
+---9
+SELECT ProductID,Quantity
+FROM Sales
+WHERE Quantity > 10;
+---10
+SELECT ProductID
+FROM Products
+ORDER BY Price DESC
+LIMIT 1;
+
+
+
+
+
+
+
+
+
