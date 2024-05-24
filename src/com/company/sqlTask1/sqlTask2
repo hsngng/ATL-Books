@@ -1,0 +1,143 @@
+create table Sales
+(
+    ID       serial primary key,
+    Product  varchar,
+    Quantity integer,
+    Price    decimal
+);
+
+insert into Sales(Product, Quantity, Price)
+VALUES ('Prod 1', 2.50, 15),
+       ('Prod 1', 8.50, 45),
+       ('Prod 2', 3.50, 20),
+       ('Prod 2', 11.50, 70),
+       ('Prod 3', 4.50, 25),
+       ('Prod 3', 15.50, 95),
+       ('Prod 4', 5.50, 30),
+       ('Prod 4', 18.50, 80),
+       ('Prod 5', 6.50, 35),
+       ('Prod 5', 16.50, 55);
+
+select sum(Quantity) AS TotalQuantity,
+       avg(Price)       AvaragePrice
+from Sales;
+
+SELECT sum(Quantity) sum_of_quantity,
+       avg(Quantity) avg_of_quantity,
+       min(price)    min_of_price,
+       max(price)    max_of_price,
+       count(Product)
+From Sales
+group by Product;
+
+create table Expenses
+(
+    ID       serial primary key,
+    Category varchar,
+    Amount   decimal
+);
+
+insert into Expenses(Category, Amount) VALUES
+('laptop', 299.99),
+('telephone', 99.99),
+('plansheet', 199.99),
+('airfrier', 299.99),
+('robot vacoum cleaner', 699.99);
+
+select sum(Amount) AS Total_Sum_Amount,
+       avg(Amount) as Total_Avg_Amount
+from Expenses group by Category;
+
+create table Productss(
+    ID serial primary key ,
+    Name varchar,
+    Price decimal
+);
+
+insert into Productss(Name, Price) VALUES
+('Product a',2.99),
+('Product b',3.99),
+('Product c',4.99),
+('Product d',5.99),
+('Product e',6.99);
+
+select min(Price) as min_price_productss,
+       max(Price) as max_price_Productss
+From Productss;
+
+create table Studentss(
+    ID serial primary key ,
+    Name varchar
+);
+
+create table Grades(
+    ID serial primary key ,
+    StudenID integer,
+    Grade decimal,
+    FOREIGN KEY (StudenID) references studentss(id)
+);
+
+insert into Studentss(Name) VALUES
+('Anna'),
+('Banana'),
+('Manana'),
+('Hakuna'),
+('Matata');
+
+insert into Grades(StudenID, Grade) VALUES
+(1, 80),
+(2, 65),
+(3, 52),
+(4, 95),
+(5, 70);
+
+select * from Grades;
+
+select Name
+from Studentss s left join Grades G on s.id=g.StudenID
+where g.grade > (select avg(Grade) from Grades);
+
+create table MaleStudents(
+    ID serial primary key ,
+    name varchar,
+    age integer
+);
+
+create table FemaleStudents(
+    ID serial primary key ,
+    name varchar,
+    age integer
+);
+
+insert into MaleStudents(name, age) VALUES
+('clara', 23),
+('cla', 24),
+('lara', 25),
+('ara', 26),
+('ra', 27);
+
+insert into FemaleStudents(name, age) VALUES
+('john', 23),
+('wick', 24),
+('arnold', 25),
+('shvarsnegir', 27),
+('shvars', 27);
+
+select name
+from FemaleStudents
+union
+select name
+from MaleStudents;
+
+select name
+from MaleStudents
+intersect
+select name
+from FemaleStudents;
+
+select age
+from MaleStudents
+except
+select age
+from FemaleStudents;
+
